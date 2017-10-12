@@ -7,7 +7,7 @@
 <body>
   <div id="app">
     Hola, {{ message }}
-    <a v-bind:href="url" target="_blank">{{ pagina }}</a>
+    <a :href="url" target="_blank">Ir a {{ pagina }}</a>
   </div>    
   <script src="https://unpkg.com/vue"></script>
   <script type="text/javascript">
@@ -15,7 +15,7 @@
       el: '#app',
       data: {
         message: 'Isaac Daniel', 
-        pagina: 'Ir a Google',
+        pagina: 'Google',
         url: 'https://google.com'
       }
     })
