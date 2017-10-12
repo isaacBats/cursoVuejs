@@ -4,8 +4,21 @@
   <meta charset="UTF-8">
   <title>Hola mundo con Vuejs</title>
 </head>
-<body id="app">
-    
+<body>
+  <div id="app">
+    Hola, {{ message }}
+    <a v-bind:href="url" target="_blank">{{ pagina }}</a>
+  </div>    
   <script src="https://unpkg.com/vue"></script>
+  <script type="text/javascript">
+    let app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Isaac Daniel', 
+        pagina: 'Ir a Google',
+        url: 'https://google.com'
+      }
+    })
+  </script>
 </body>
 </html>
