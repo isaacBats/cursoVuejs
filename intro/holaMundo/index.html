@@ -8,17 +8,41 @@
   <div id="app">
     <input type="text" name="nombre" placeholder="Ingresa tu nombre" v-model="nombre">
     <p>Tu nombre en mayusculas es: {{ nombre | uppercase }}</p>
+
+    <form @submit.prevent="submit" action="" method="get">
+      <h2>¿Cuáles son tus cursos favoritos?</h2>
+      <label for="vue">
+        <input v-model="cursos" type="checkbox" id="vue" value="vue" > Curso de Vue.js 
+      </label>
+      <label for="seo">
+        <input v-model="cursos" type="checkbox" id="seo" value="seo" > Curso de SEO 
+      </label>
+      <label for="reac">
+        <input v-model="cursos" type="checkbox" id="reac" value="reac" > Curso de Reac y Redus 
+      </label>
+      <label for="growth">
+        <input v-model="cursos" type="checkbox" id="growth" value="growth" > Curso de Growth Marketing
+      </label>
+      <button type="submit" >Enviar</button>
+    </form>
   </div>    
   <script src="https://unpkg.com/vue"></script>
   <script type="text/javascript">
     let app = new Vue({
       el: '#app',
       data: {
-        nombre: ''
+        nombre: '',
+        cursos: []
       },
       filters: {
         uppercase: function(str) {
           return str.toUpperCase()
+        }
+      },
+      methods: {
+        submit: function() {
+          console.log('Se ejecuta el metodo submit')
+          console.log(this.cursos)
         }
       }
     })
