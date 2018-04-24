@@ -4,6 +4,7 @@
     h1 Music
     select(v-model="selectedCountry")
       option(v-for="country in countries" :value="country.value") {{ country.name }}
+    spinner(v-show="loading")
     ul
       artist(v-for="artist in artists" v-bind:artist="artist" v-bind:key="artist.mbid")
 </template>
@@ -12,6 +13,7 @@
 
 import getArtists from './api'
 import Artist from './components/Artist.vue'
+import Spinner from './components/Spinner.vue'
 
 export default {
   name: 'app',
@@ -24,17 +26,22 @@ export default {
         { name: 'España', value: 'spain' },
         { name: 'México', value: 'mexico' },
       ],
-      selectedCountry: 'mexico'
+      selectedCountry: 'mexico',
+      loading: true
     }
   },
   components: {
-    Artist
+    Artist,
+    Spinner
   },
   methods: {
     refreshArtists() {
       const self = this
+      this.loading = true
+      this.artists = []
       getArtists(this.selectedCountry)
         .then(function (artists) {
+          self.loading = false
           self.artists = artists
         })
     }
