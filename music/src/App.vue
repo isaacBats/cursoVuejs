@@ -2,27 +2,50 @@
   #app
     img(src='./assets/logo.png')
     h1 Music
+    select(v-model="selectedCountry")
+      option(v-for="country in countries" :value="country.value") {{ country.name }}
     ul
-      li(v-for="artist in artists") {{ artist.name }}
+      artist(v-for="artist in artists" v-bind:artist="artist" v-bind:key="artist.mbid")
 </template>
 
 <script>
 
 import getArtists from './api'
+import Artist from './components/Artist.vue'
 
 export default {
   name: 'app',
   data () {
     return {
-      artists: []
+      artists: [],
+      countries: [
+        { name: 'Argentina', value: 'argentina' },
+        { name: 'Colombia', value: 'colombia' },
+        { name: 'España', value: 'spain' },
+        { name: 'México', value: 'mexico' },
+      ],
+      selectedCountry: 'mexico'
     }
   },
-  mounted: function () {
-    const self = this
-    getArtists()
-      .then(function (artists) {
-        self.artists = artists
-      })
+  components: {
+    Artist
+  },
+  methods: {
+    refreshArtists() {
+      const self = this
+      getArtists(this.selectedCountry)
+        .then(function (artists) {
+          self.artists = artists
+        })
+    }
+  },
+  mounted () {
+    this.refreshArtists()
+  },
+  watch: {
+    selectedCountry() {
+      this.refreshArtists()
+    }
   }
 }
 </script>
