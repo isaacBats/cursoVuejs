@@ -10,51 +10,50 @@
 </template>
 
 <script>
+  import getArtists from './api'
+  import Artist from './components/Artist.vue'
+  import Spinner from './components/Spinner.vue'
 
-import getArtists from './api'
-import Artist from './components/Artist.vue'
-import Spinner from './components/Spinner.vue'
-
-export default {
-  name: 'app',
-  data () {
-    return {
-      artists: [],
-      countries: [
-        { name: 'Argentina', value: 'argentina' },
-        { name: 'Colombia', value: 'colombia' },
-        { name: 'España', value: 'spain' },
-        { name: 'México', value: 'mexico' },
-      ],
-      selectedCountry: 'mexico',
-      loading: true
-    }
-  },
-  components: {
-    Artist,
-    Spinner
-  },
-  methods: {
-    refreshArtists() {
-      const self = this
-      this.loading = true
-      this.artists = []
-      getArtists(this.selectedCountry)
-        .then(function (artists) {
-          self.loading = false
-          self.artists = artists
-        })
-    }
-  },
-  mounted () {
-    this.refreshArtists()
-  },
-  watch: {
-    selectedCountry() {
+  export default {
+    name: 'app',
+    data () {
+      return {
+        artists: [],
+        countries: [
+          { name: 'Argentina', value: 'argentina' },
+          { name: 'Colombia', value: 'colombia' },
+          { name: 'España', value: 'spain' },
+          { name: 'México', value: 'mexico' },
+        ],
+        selectedCountry: 'mexico',
+        loading: true
+      }
+    },
+    components: {
+      Artist,
+      Spinner
+    },
+    methods: {
+      refreshArtists() {
+        const self = this
+        this.loading = true
+        this.artists = []
+        getArtists(this.selectedCountry)
+          .then(function (artists) {
+            self.loading = false
+            self.artists = artists
+          })
+      }
+    },
+    mounted () {
       this.refreshArtists()
+    },
+    watch: {
+      selectedCountry() {
+        this.refreshArtists()
+      }
     }
   }
-}
 </script>
 
 <style lang="stylus">
